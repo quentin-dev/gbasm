@@ -5,17 +5,20 @@ LD = rgblink
 FIX = rgbfix
 FIXFLAGS = -v -p 0
 
-OBJ = main.o
+INCDIR = src/
+
+OBJ = src/main.o src/utils.o src/joypad.o
 ROM = hello-world.gb
+SYM = hello-world.sym
 
 all: $(ROM)
 	$(FIX) $(FIXFLAGS) $(ROM)
 
 $(ROM): $(OBJ)
-	$(LD) -o $(ROM) $(OBJ)
+	$(LD) -n $(SYM) -o $(ROM) $(OBJ)
 
 %.o: %.asm
-	$(CC) -o $@ $^
+	$(CC) -i $(INCDIR) -o $@ $^
 
 clean:
-	$(RM) $(OBJ) $(ROM)
+	$(RM) $(OBJ) $(SYM) $(ROM)

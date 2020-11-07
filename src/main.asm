@@ -1,5 +1,7 @@
 INCLUDE "hardware.inc"
 
+_PAD EQU _RAM
+
 SECTION "Header", ROM0[$100]
 
 
@@ -14,12 +16,9 @@ ENDR
 SECTION "Game code", ROM0
 
 Start:
-    ; Turn off LCD
-.waitVBlank
-    ld a, [rLY]
-    cp 144 ; Check if LCD is past VBlank
-    jr c, .waitVBlank
+    call WAITVBLANK
 
+    ; Turn off LCD
     xor a ; ld a, 0 ; Only bit 7 needs reset, but 0 works
     ld [rLCDC], a
 
@@ -59,14 +58,28 @@ Start:
     ld a, %10000001
     ld [rLCDC], a
 
-    ; Lock up
-.lockup
-    jr .lockup
+.game_loop:
+    call WAITVBLANK
+
+.loop_until_145:
+    ld a, [rLY]
+    cp 145
+    jp nz, .loop_until_145
+
+    call READJOYPAD
+
+.scroll:
+
+    ld a, [rSCX]
+    inc a
+    ld [rSCX], a
+
+    jp .game_loop
 
 SECTION "Font", ROM0
 
 FontTiles:
-INCBIN "font.chr"
+INCBIN "data/font.chr"
 FontTilesEnd:
 
 SECTION "Hello World string", ROM0

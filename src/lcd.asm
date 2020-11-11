@@ -19,12 +19,12 @@ WAITVBLANK::
     jp nz, WAITVBLANK
     ret
 
-LCDON::
+ENABLELCD::
     ld hl, rLCDC
     set 7, [hl]
     ret
 
-LCDOFF::
+DISABLELCD::
     ld hl, rLCDC
     res 7, [hl]
     ret
@@ -39,13 +39,6 @@ DISABLEBG::
     res 0, [hl]
     ret
 
-SELECTDISPLAY1::
-    ld hl, rLCDC
-    res 4, [hl]
-    res 3, [hl]
-    res 5, [hl]
-    ret
-
 STARTLCD::
 
     ld a, LCDCF_ON | LCDCF_BG9800 |LCDCF_WINOFF | LCDCF_BG8800 | LCDCF_BGON
@@ -58,12 +51,7 @@ STOPLCD::
     rlca
     ret nc
 
-.wait:
-
-    ; wait vblank
-    ld a, [rLY]
-    cp 145
-    jr nz, .wait
+    call WAITVBLANK
 
     xor a
     ld [rLCDC], a

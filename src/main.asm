@@ -1,6 +1,13 @@
 INCLUDE "hardware.inc"
 
-_PAD EQU _RAM
+; Sprite constants
+_SPR0_Y EQU _OAMRAM ; Sprite Y = start of sprite memory
+_SPR0_X EQU _OAMRAM + 1
+_SPR0_NUM EQU _OAMRAM + 2
+_SPR0_ATT EQU _OAMRAM + 3
+
+_MOVX EQU _RAM
+_MOVY EQU _RAM + 1
 
 SECTION "Header", ROM0[$100]
 
@@ -43,6 +50,8 @@ Start:
     and a ; Check if we copied a 0
     jr nz, .copyString ; Continue if it is not
 
+.copy
+
     ; Init display register
     ld a, %11100100
     ld [rBGP], a
@@ -54,24 +63,29 @@ Start:
     ; Shut sound down
     ld [rNR52], a
 
-    ; Turn screen on, display background
-    ld a, %10000001
-    ld [rLCDC], a
+    call INITMENU
 
-.game_loop:
+    ; Turn screen on, display background
+    ; ld a, %10000001
+    ; ld [rLCDC], a
+    call ENABLEBG
+    call SELECTDISPLAY1
+    call LCDON
+
+.game_loop
     call WAITVBLANK
 
-.loop_until_145:
+.loop_until_145
     ld a, [rLY]
     cp 145
     jp nz, .loop_until_145
 
     call READJOYPAD
 
-.scroll:
+.scroll
 
     ld a, [rSCX]
-    inc a
+    ; inc a
     ld [rSCX], a
 
     jp .game_loop
@@ -86,3 +100,13 @@ SECTION "Hello World string", ROM0
 
 HelloWorldStr:
     db "Hello, World!", 0
+HelloWorldStrEnd:
+
+SECTION "Sprite tiles", ROM0
+
+Tiles:
+    db  $AA, $00, $44, $00, $AA, $00, $11, $00
+    db  $AA, $00, $44, $00, $AA, $00, $11, $00
+    db  $3E, $3E, $41, $7F, $41, $6B, $41, $7F
+    db  $41, $63, $41, $7F, $3E, $3E, $00, $00
+EndTiles:

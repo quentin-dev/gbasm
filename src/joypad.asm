@@ -3,7 +3,7 @@ INCLUDE "hardware.inc"
 SECTION "joypad utils", ROMX
 
 READJOYPAD::
-    ;; Read joypad
+    ; Read joypad
     ld a, P1F_5
     ld [rP1], a
 
@@ -53,7 +53,7 @@ READJOYPAD::
     dec a
     ld [rSCX], a
 
-.check_left:
+.check_left
 
     ld a,b
 

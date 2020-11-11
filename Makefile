@@ -1,24 +1,31 @@
 CC = rgbasm
 
 LD = rgblink
+LDFLAGS =
 
 FIX = rgbfix
 FIXFLAGS = -v -p 0
 
 INCDIR = src/
+IMGDIR = assets/images
 
-OBJ = src/main.o src/utils.o src/joypad.o
+OBJ = src/main.o src/lcd.o src/joypad.o src/memory.o src/menu.o
+
 ROM = hello-world.gb
 SYM = hello-world.sym
+MAP = hello-world.map
 
 all: $(ROM)
 	$(FIX) $(FIXFLAGS) $(ROM)
 
+debug: LDFLAGS += -m $(MAP) -n $(SYM)
+debug: all
+
 $(ROM): $(OBJ)
-	$(LD) -n $(SYM) -o $(ROM) $(OBJ)
+	$(LD) $(LDFLAGS) -o $(ROM) $(OBJ)
 
 %.o: %.asm
-	$(CC) -i $(INCDIR) -o $@ $^
+	$(CC) -i $(INCDIR) -i $(IMGDIR) -o $@ $^
 
 clean:
-	$(RM) $(OBJ) $(SYM) $(ROM)
+	$(RM) $(OBJ) $(SYM) $(MAP) $(ROM)

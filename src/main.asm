@@ -90,17 +90,15 @@ Start:
 .game_loop
     call WAITVBLANK
 
-.loop_until_145
-    ; ld a, [rLY]
-    ; cp 145
-    ; jp nz, .loop_until_145
-
-    ; call READJOYPAD
     call READJOYPAD2
+
+.a_pressed
 
     ld a, b
 
-    and P1F_0
+    ; Check if the A button was pressed
+    ; bit PADB_A, a
+    bit PADB_START, a
     jr nz, .b_pressed
 
     call STOPLCD
@@ -109,14 +107,16 @@ Start:
 
     call STARTLCD
 
-    jr .scroll
+    jr .end
 
 .b_pressed
 
     ld a, b
 
-    and P1F_1
-    jr nz, .scroll
+    ; Check if the B button was pressed
+    ; and P1F_1
+    bit PADB_B, a
+    jr nz, .end
 
     call STOPLCD
 
@@ -124,13 +124,9 @@ Start:
 
     call STARTLCD
 
-.scroll
+.end
 
-    ; ld a, [rSCX]
-    ; inc a
-    ; ld [rSCX], a
-
-    jp .game_loop
+    jr .game_loop
 
 SECTION "Font", ROM0
 

@@ -1,2 +1,9 @@
+# Make generated binary files
+
 *.o
 *.gb
+
+# RGBASM generated debugging files
+
+*.map
+*.sym

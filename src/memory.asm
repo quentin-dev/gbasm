@@ -2,9 +2,9 @@ INCLUDE "hardware.inc"
 
 SECTION "memory utils", ROMX
 
-; @param HL:
-; @param DE:
-; @param BC:
+; @param HL: Source's starting position
+; @param DE: Destination's starting position
+; @param BC: Number of bytes to copy
 MEMCOPY::
 
     inc b
@@ -39,7 +39,7 @@ MEMCOPYTOVRAM::
 
     di
 
-    ; WaitForLCD
+    call WAITVRAM
 
     ld a, [hl+]
     ld [de], a

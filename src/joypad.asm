@@ -2,6 +2,20 @@ INCLUDE "hardware.inc"
 
 SECTION "joypad utils", ROMX
 
+READJOYPAD2::
+
+    ld a, P1F_4
+    ld [rP1], a
+
+    ld a, [rP1]
+    ld a, [rP1]
+    ld a, [rP1]
+    ld a, [rP1]
+
+    ld b, a
+
+    ret
+
 READJOYPAD::
     ; Read joypad
     ld a, P1F_5

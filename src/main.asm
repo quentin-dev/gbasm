@@ -9,6 +9,21 @@ _SPR0_ATT EQU _OAMRAM + 3
 _MOVX EQU _RAM
 _MOVY EQU _RAM + 1
 
+SECTION "Vblank", ROM0[$0040]
+	reti
+
+SECTION "LCDC", ROM0[$0048]
+	reti
+
+SECTION "Timer", ROM0[$0050]
+	reti
+
+SECTION "Serial", ROM0[$0058]
+	reti
+
+SECTION "Joypad", ROM0[$0060]
+	reti
+
 SECTION "Header", ROM0[$100]
 
 
@@ -26,8 +41,10 @@ Start:
     call WAITVBLANK
 
     ; Turn off LCD
-    xor a ; ld a, 0 ; Only bit 7 needs reset, but 0 works
-    ld [rLCDC], a
+    ; xor a ; ld a, 0 ; Only bit 7 needs reset, but 0 works
+    ; ld [rLCDC], a
+
+    call STOPLCD
 
     ld hl, $9000
     ld de, FontTiles
@@ -68,25 +85,50 @@ Start:
     ; Turn screen on, display background
     ; ld a, %10000001
     ; ld [rLCDC], a
-    call ENABLEBG
-    call SELECTDISPLAY1
-    call LCDON
+    call STARTLCD
 
 .game_loop
     call WAITVBLANK
 
 .loop_until_145
-    ld a, [rLY]
-    cp 145
-    jp nz, .loop_until_145
+    ; ld a, [rLY]
+    ; cp 145
+    ; jp nz, .loop_until_145
 
-    call READJOYPAD
+    ; call READJOYPAD
+    call READJOYPAD2
+
+    ld a, b
+
+    and P1F_0
+    jr nz, .b_pressed
+
+    call STOPLCD
+
+    call INITGAME
+
+    call STARTLCD
+
+    jr .scroll
+
+.b_pressed
+
+    ld a, b
+
+    and P1F_1
+    jr nz, .scroll
+
+    call STOPLCD
+
+    call INITMENU
+
+    call STARTLCD
 
 .scroll
 
-    ld a, [rSCX]
+    ; ld a, [rSCX]
     ; inc a
-    ld [rSCX], a
+    ; ld [rSCX], a
 
     jp .game_loop
 
@@ -101,12 +143,3 @@ SECTION "Hello World string", ROM0
 HelloWorldStr:
     db "Hello, World!", 0
 HelloWorldStrEnd:
-
-SECTION "Sprite tiles", ROM0
-
-Tiles:
-    db  $AA, $00, $44, $00, $AA, $00, $11, $00
-    db  $AA, $00, $44, $00, $AA, $00, $11, $00
-    db  $3E, $3E, $41, $7F, $41, $6B, $41, $7F
-    db  $41, $63, $41, $7F, $3E, $3E, $00, $00
-EndTiles:

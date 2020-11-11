@@ -9,7 +9,7 @@ FIXFLAGS = -v -p 0
 INCDIR = src/
 IMGDIR = assets/images
 
-OBJ = src/main.o src/lcd.o src/joypad.o src/memory.o src/menu.o
+OBJ = src/main.o src/lcd.o src/joypad.o src/memory.o src/menu.o src/game.o 
 
 ROM = hello-world.gb
 SYM = hello-world.sym

@@ -92,12 +92,11 @@ Start:
 
     call READJOYPAD2
 
-.a_pressed
+.start_pressed
 
     ld a, b
 
-    ; Check if the A button was pressed
-    ; bit PADB_A, a
+    ; Check if the Start button was pressed
     bit PADB_START, a
     jr nz, .b_pressed
 
@@ -114,7 +113,6 @@ Start:
     ld a, b
 
     ; Check if the B button was pressed
-    ; and P1F_1
     bit PADB_B, a
     jr nz, .end
 

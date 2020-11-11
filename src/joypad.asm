@@ -2,17 +2,37 @@ INCLUDE "hardware.inc"
 
 SECTION "joypad utils", ROMX
 
+; Gets the currently pressed keys
+; @overwrite: A, B, and C
+; @return B: The value of the Button key that was pressed, if any
+; @return C: The value of the Joypad key that was pressed, if any
 READJOYPAD2::
 
+    ; Select the Button keys (A, B, Select, Start)
     ld a, P1F_4
     ld [rP1], a
 
+    ; Read the value multiple times to avoid "bouncing"
     ld a, [rP1]
     ld a, [rP1]
     ld a, [rP1]
     ld a, [rP1]
 
+    ; Save the value to B
     ld b, a
+
+    ; Select the Joypad keys (Up, Down, Left, Right)
+    ld a, P1F_5
+    ld [rP1], a
+
+    ; Read the value multiple times to avoid "bouncing"
+    ld a, [rP1]
+    ld a, [rP1]
+    ld a, [rP1]
+    ld a, [rP1]
+
+    ; Save to value to C
+    ld c, a
 
     ret
 

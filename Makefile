@@ -11,9 +11,9 @@ IMGDIR = assets/images
 
 OBJ = src/main.o src/lcd.o src/joypad.o src/memory.o src/menu.o src/game.o 
 
-ROM = hello-world.gb
-SYM = hello-world.sym
-MAP = hello-world.map
+ROM = gbasm.gb
+SYM = gbasm.sym
+MAP = gbasm.map
 
 all: $(ROM)
 	$(FIX) $(FIXFLAGS) $(ROM)

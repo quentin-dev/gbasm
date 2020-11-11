@@ -4,6 +4,9 @@ SECTION "game screen", ROMX
 
 INCLUDE "game-bg.inc"
 
+; Copies the game background tile and map data to $9000 (VRAM) and screen
+; @overwrites: HL, DE, and BC
+; @returns: Nothing
 INITGAME::
 
     ld hl, gamebg_tile_data

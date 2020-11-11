@@ -1,10 +1,33 @@
 # gbasm
 
+## Pre-requisites
+
+- [RGBASM](https://github.com/gbdev/rgbds)
+
+## Compilation
+
+### Building the game
+
+- `make`
+- Open `gbasm.gb` with your favorite emulator
+
+### Building the game with debug info
+
+- `make debug`
+- Read the newly-created `gbasm.map` and `gbasm.sym` for more information
+- Open `gbasm.bg` with your favorite emulator
+
 ## Resources
 
 ### Font
 
 Found [here](https://dragon.style/@dodec/100218699356979811)
+
+### Tools
+
+- [BGB](https://bgb.bircd.org/)
+- [Aseprite](https://www.aseprite.org/)
+- [Gameboy Tile Data Generator](https://github.com/chrisantonellis/gbtdg)
 
 ### Documentation
 

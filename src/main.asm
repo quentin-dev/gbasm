@@ -104,7 +104,7 @@ Start:
 
     call INITGAME
 
-    call STARTLCD
+    call STARTLCDWITHSPRITES
 
     jr .end
 
@@ -114,13 +114,45 @@ Start:
 
     ; Check if the B button was pressed
     bit PADB_B, a
-    jr nz, .end
+    jr nz, .right_pressed
 
     call STOPLCD
 
     call INITMENU
 
     call STARTLCD
+
+    jr .end
+
+.right_pressed
+
+    ld a, c
+
+    bit $0, a
+    ; jr nz, .end
+
+    call z, MOVERIGHT
+
+.left_pressed
+
+    ld a, c
+
+    bit $1, a
+    call z, MOVELEFT
+
+.up_pressed
+
+    ld a, c
+
+    bit $2, a
+    call z, MOVEUP
+
+.down_pressed
+
+    ld a, c
+
+    bit $3, a
+    call z, MOVEDOWN
 
 .end
 

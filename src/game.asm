@@ -3,6 +3,7 @@ INCLUDE "hardware.inc"
 SECTION "game screen", ROMX
 
 INCLUDE "game-bg.inc"
+INCLUDE "spritesheet.inc"
 
 ; Copies the game background tile and map data to $9000 (VRAM) and screen
 ; @overwrites: HL, DE, and BC
@@ -18,5 +19,24 @@ INITGAME::
     ld de, _SCRN0
     ld bc, gamebg_tile_map_size
     call MEMCOPY
+
+    ld hl, spritesheet_tile_data
+    ld de, _VRAM
+    ld bc, spritesheet_tile_data_size
+    call MEMCOPYTOVRAM
+
+    call RESETALLOAMATTR
+
+    ld hl, _OAMRAM
+    ld [hl], 84
+
+    inc l
+    ld [hl], 80
+
+    inc l
+    ld [hl], $00
+
+    inc l
+    ld [hl], $00
 
     ret

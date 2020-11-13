@@ -49,6 +49,15 @@ STARTLCD::
     ld [rLCDC], a
     ret
 
+; Initializes the LCD with the same parameters as STARTLCD and 8 x 8 sprites enabled
+; @overwrites: A
+; @return: Nothing
+STARTLCDWITHSPRITES::
+    
+    ld a, LCDCF_ON | LCDCF_BG9800 | LCDCF_WINOFF | LCDCF_BG8800 | LCDCF_BGON | LCDCF_OBJON | LCDCF_OBJ8
+    ld [rLCDC], a
+    ret
+
 ; Stops the LCD, but waits for VBlank before doing so
 ; @overwrites: A
 ; @return: Nothing

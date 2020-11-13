@@ -9,7 +9,9 @@ FIXFLAGS = -v -p 0
 INCDIR = src/
 IMGDIR = assets/images
 
-OBJ = src/main.o src/lcd.o src/joypad.o src/memory.o src/menu.o src/game.o 
+OBJ = src/main.o src/lcd.o src/joypad.o
+OBJ += src/memory.o src/menu.o src/game.o
+OBJ += src/sprites.o src/player.o
 
 ROM = gbasm.gb
 SYM = gbasm.sym

@@ -43,3 +43,45 @@ SETPLAYERSPRITETILE: MACRO
     ld [hl], \1
 
 ENDM
+
+;
+; @param \1: the X postion
+; @param \2: the Y position
+; @overwrites: HL
+; @returns BC: the tile index
+GETBGTILEINDEXAT: MACRO
+
+    ; Calculate (Y * 32) + [rSCY] + X + ([rSCX] / 32) + _SCRN0
+
+    push bc
+
+    ld hl, 0
+
+    ; Add (Y * 32) + X + _SCRN0    
+    ld bc, ((\2 / 8) * 32) + (\1 / 8) + _SCRN0
+    add hl, bc
+
+    ; Add [rSCY]
+    ld bc, 0
+    ld a, [rSCY]
+    ld c, a
+    add hl, bc
+
+    ; Add [rSCX] / 32
+    ld bc, 0
+    ld a, [rSCX]
+
+    rra
+    rra
+    rra
+    rra
+    rra
+
+    ld c, a
+    add hl, bc
+
+    pop bc
+
+    ; ld bc[hl]
+    
+ENDM

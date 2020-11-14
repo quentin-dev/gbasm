@@ -1,4 +1,5 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 
 SECTION "player utils", ROMX
 
@@ -7,9 +8,18 @@ SECTION "player utils", ROMX
 ; @returns: Nothing
 MOVERIGHT::
 
+    ; GETBGTILEINDEXAT 80, 72
+
+    ; and [hl]
+
+    ; jr nz, .end
+
     ld a, [rSCX]
+    ; add 8
     inc a
     ld [rSCX], a
+
+.end
 
     ret
 

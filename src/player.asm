@@ -2,6 +2,9 @@ INCLUDE "hardware.inc"
 
 SECTION "player utils", ROMX
 
+; What to do when the player should move right
+; @overwrite: A
+; @returns: Nothing
 MOVERIGHT::
 
     ld a, [rSCX]
@@ -10,6 +13,9 @@ MOVERIGHT::
 
     ret
 
+; What to do when the player should move left
+; @overwrite: A
+; @returns: Nothing
 MOVELEFT::
 
     ld a, [rSCX]
@@ -18,6 +24,9 @@ MOVELEFT::
 
     ret
 
+; What to do when the player should move up
+; @overwrite: A
+; @returns: Nothing
 MOVEUP::
 
     ld a, [rSCY]
@@ -26,6 +35,9 @@ MOVEUP::
 
     ret
 
+; What to do when the player should move down
+; @overwrite: A
+; @returns: Nothing
 MOVEDOWN::
 
     ld a, [rSCY]

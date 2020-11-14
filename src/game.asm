@@ -1,4 +1,5 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 
 SECTION "game screen", ROMX
 
@@ -25,24 +26,17 @@ INITGAME::
     ld bc, spritesheet_tile_data_size
     call MEMCOPYTOVRAM
 
+    ; Set first sprite palette
     ld hl, rOBP0
     ld [hl], %11100100
 
+    ; Set second sprite palette
     ld hl, rOBP1
     ld [hl], %11100100
 
     call RESETALLOAMATTR
 
-    ld hl, _OAMRAM
-    ld [hl], 84
-
-    inc l
-    ld [hl], 80
-
-    inc l
-    ld [hl], $00
-
-    inc l
-    ld [hl], $00
+    SETPLAYERSPRITETILE 0
+    SETPLAYERSCREENPOSITION 80, 72
 
     ret

@@ -2,6 +2,9 @@ INCLUDE "hardware.inc"
 
 SECTION "sprite utils", ROMX
 
+; Sets all OAM attributes to 0
+; @overwrite: B, HL
+; @returns: Nothing
 RESETALLOAMATTR::
         
     ld b, 160

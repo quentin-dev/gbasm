@@ -25,6 +25,12 @@ INITGAME::
     ld bc, spritesheet_tile_data_size
     call MEMCOPYTOVRAM
 
+    ld hl, rOBP0
+    ld [hl], %11100100
+
+    ld hl, rOBP1
+    ld [hl], %11100100
+
     call RESETALLOAMATTR
 
     ld hl, _OAMRAM

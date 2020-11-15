@@ -1,4 +1,8 @@
 INCLUDE "hardware.inc"
+INCLUDE "constants.inc"
+
+    IF !DEF(MACROS_INC)
+MACROS_INC SET 1
 
 ; ### SPRITE & PLAYER MACROS ###
 
@@ -44,15 +48,13 @@ SETPLAYERSPRITETILE: MACRO
 
 ENDM
 
-;
+; WIP
 ; @param \1: the X postion
 ; @param \2: the Y position
-; @overwrites: HL
-; @returns BC: the tile index
+; @returns HL: the address of the corresponding tile
 GETBGTILEINDEXAT: MACRO
 
     ; Calculate (Y * 32) + [rSCY] + X + ([rSCX] / 32) + _SCRN0
-
     push bc
 
     ld hl, 0
@@ -81,7 +83,42 @@ GETBGTILEINDEXAT: MACRO
     add hl, bc
 
     pop bc
-
-    ; ld bc[hl]
     
 ENDM
+
+; Update the player's X position in RAM
+; @param \1: the new X position
+; @overwrite: HL
+; @returns: Nothing
+UPDATEPLAYERXPOSITION: MACRO
+
+    ld hl, PLAYER_X
+    ld [hl], \1
+
+ENDM
+
+; Increase the player's X position
+; @param \1: the value to add
+; @overwrite: HL, A
+; @returns: Nothing
+INCREASEPLAYERXPOSITION: MACRO
+
+    ld hl, PLAYER_X
+    ld a, \1
+    add [hl]
+    ld [hl], a
+
+ENDM
+
+; Update the player's Y position in RAM
+; @param \1: The new Y position
+; @overwrite: HL
+; @returns: Nothing
+UPDATEPLAYERYPOSITION: MACRO
+
+    ld hl, PLAYER_Y
+    ld [hl], \1
+
+ENDM
+
+    ENDC ;MACROS_INC

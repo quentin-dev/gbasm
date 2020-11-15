@@ -1,5 +1,6 @@
 INCLUDE "hardware.inc"
 INCLUDE "macros.inc"
+INCLUDE "constants.inc"
 
 SECTION "game screen", ROMX
 
@@ -38,5 +39,8 @@ INITGAME::
 
     SETPLAYERSPRITETILE 0
     SETPLAYERSCREENPOSITION 80, 72
+
+    UPDATEPLAYERXPOSITION 10
+    UPDATEPLAYERYPOSITION 9
 
     ret

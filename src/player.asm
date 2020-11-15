@@ -19,6 +19,8 @@ MOVERIGHT::
     inc a
     ld [rSCX], a
 
+    INCREASEPLAYERXPOSITION 1
+
 .end
 
     ret

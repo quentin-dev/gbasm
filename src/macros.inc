@@ -110,6 +110,16 @@ INCREASEPLAYERXPOSITION: MACRO
 
 ENDM
 
+DECREASEPLAYERXPOSITION: MACRO
+
+    ld hl, PLAYER_X
+    ld a, [hl]
+    ld b, \1
+    sub a, b
+    ld [hl], a
+
+ENDM
+
 ; Update the player's Y position in RAM
 ; @param \1: The new Y position
 ; @overwrite: HL

@@ -1,14 +1,6 @@
 INCLUDE "hardware.inc"
 INCLUDE "constants.inc"
-
-; Sprite constants
-_SPR0_Y EQU _OAMRAM ; Sprite Y = start of sprite memory
-_SPR0_X EQU _OAMRAM + 1
-_SPR0_NUM EQU _OAMRAM + 2
-_SPR0_ATT EQU _OAMRAM + 3
-
-_MOVX EQU _RAM
-_MOVY EQU _RAM + 1
+INCLUDE "macros.inc"
 
 SECTION "Vblank", ROM0[$0040]
 	reti
@@ -91,9 +83,7 @@ Start:
 .game_loop
     call WAITVBLANK
 
-    ld hl, MOVE_COOLDOWN
-
-    and [hl]
+    CHECKMOVECOOLDOWN
 
     jr nz, .decrease
 
@@ -136,8 +126,6 @@ Start:
     ld a, c
 
     bit $0, a
-    ; jr nz, .end
-
     call z, MOVERIGHT
 
 .left_pressed
@@ -169,8 +157,7 @@ Start:
 
     ; FIXME: Update rSCX / rSCY evenly during cooldown instead of all at once
 
-    ld hl, MOVE_COOLDOWN
-    dec [hl]
+    call UPDATECOOLDOWN
 
     jr .game_loop
 

@@ -47,3 +47,17 @@ INITGAME::
     ld [hl], 0
 
     ret
+
+SETMOVECOOLDOWN::
+
+    ld hl, MOVE_COOLDOWN
+    ld [hl], MOVE_COOLDOWN_LENGTH
+
+    ret
+
+UPDATECOOLDOWN::
+
+    ld hl, MOVE_COOLDOWN
+    dec [hl]
+
+    ret

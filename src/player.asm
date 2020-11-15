@@ -10,18 +10,13 @@ MOVERIGHT::
 
     ; GETBGTILEINDEXAT 80, 72
 
-    ; and [hl]
-
-    ; jr nz, .end
-
     ld a, [rSCX]
-    add 8
-    ; inc a
+    add MOVE_SIZE
     ld [rSCX], a
 
-    ; INCREASEPLAYERXPOSITION 1
+    call SETMOVECOOLDOWN
 
-    SETMOVECOOLDOWN
+    ; INCREASEPLAYERXPOSITION 1
 
 .end
 
@@ -33,8 +28,11 @@ MOVERIGHT::
 MOVELEFT::
 
     ld a, [rSCX]
-    dec a
+    ; dec a
+    sub MOVE_SIZE
     ld [rSCX], a
+
+    call SETMOVECOOLDOWN
 
     ret
 
@@ -44,8 +42,11 @@ MOVELEFT::
 MOVEUP::
 
     ld a, [rSCY]
-    dec a
+    ; dec a
+    sub MOVE_SIZE
     ld [rSCY], a
+
+    call SETMOVECOOLDOWN
 
     ret
 
@@ -55,7 +56,10 @@ MOVEUP::
 MOVEDOWN::
 
     ld a, [rSCY]
-    inc a
+    ; inc a
+    add MOVE_SIZE
     ld [rSCY], a
+
+    call SETMOVECOOLDOWN
 
     ret

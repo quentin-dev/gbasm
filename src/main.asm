@@ -1,4 +1,5 @@
 INCLUDE "hardware.inc"
+INCLUDE "constants.inc"
 
 ; Sprite constants
 _SPR0_Y EQU _OAMRAM ; Sprite Y = start of sprite memory
@@ -90,6 +91,12 @@ Start:
 .game_loop
     call WAITVBLANK
 
+    ld hl, MOVE_COOLDOWN
+
+    and [hl]
+
+    jr nz, .decrease
+
     call READJOYPAD2
 
 .start_pressed
@@ -155,6 +162,15 @@ Start:
     call z, MOVEDOWN
 
 .end
+
+    jr .game_loop
+
+.decrease
+
+    ; FIXME: Update rSCX / rSCY evenly during cooldown instead of all at once
+
+    ld hl, MOVE_COOLDOWN
+    dec [hl]
 
     jr .game_loop
 

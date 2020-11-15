@@ -15,11 +15,13 @@ MOVERIGHT::
     ; jr nz, .end
 
     ld a, [rSCX]
-    ; add 8
-    inc a
+    add 8
+    ; inc a
     ld [rSCX], a
 
-    INCREASEPLAYERXPOSITION 1
+    ; INCREASEPLAYERXPOSITION 1
+
+    SETMOVECOOLDOWN
 
 .end
 

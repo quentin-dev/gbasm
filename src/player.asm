@@ -28,7 +28,6 @@ MOVERIGHT::
 MOVELEFT::
 
     ld a, [rSCX]
-    ; dec a
     sub MOVE_SIZE
     ld [rSCX], a
 
@@ -44,7 +43,6 @@ MOVELEFT::
 MOVEUP::
 
     ld a, [rSCY]
-    ; dec a
     sub MOVE_SIZE
     ld [rSCY], a
 
@@ -60,7 +58,6 @@ MOVEUP::
 MOVEDOWN::
 
     ld a, [rSCY]
-    ; inc a
     add MOVE_SIZE
     ld [rSCY], a
 

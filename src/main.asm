@@ -80,7 +80,31 @@ Start:
     ; ld [rLCDC], a
     call STARTLCD
 
+.menu_loop
+    call WAITVBLANK
+
+    ; CHECKMOVECOOLDOWN
+
+    ; jr nz, .decrease
+
+    call READJOYPAD2
+
+.menu_start_pressed
+
+    ld a, b
+
+    ; Check if the Start button was pressed
+    bit PADB_START, a
+    jr nz, .menu_loop
+
+    call STOPLCD
+
+    call INITGAME
+
+    call STARTLCDWITHSPRITES
+
 .game_loop
+
     call WAITVBLANK
 
     CHECKMOVECOOLDOWN
@@ -97,11 +121,13 @@ Start:
     bit PADB_START, a
     jr nz, .b_pressed
 
-    call STOPLCD
+    ; FIXME: Assign action to in-game Start button press
 
-    call INITGAME
+    ; call STOPLCD
 
-    call STARTLCDWITHSPRITES
+    ; call INITGAME
+
+    ; call STARTLCDWITHSPRITES
 
     jr .end
 
@@ -113,11 +139,13 @@ Start:
     bit PADB_B, a
     jr nz, .right_pressed
 
-    call STOPLCD
+    ; FIXME: Assign action to in-game B button press
 
-    call INITMENU
+    ; call STOPLCD
 
-    call STARTLCD
+    ; call INITMENU
+
+    ; call STARTLCD
 
     jr .end
 

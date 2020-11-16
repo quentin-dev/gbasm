@@ -19,6 +19,10 @@
 
 ## Resources
 
+### hardware.inc
+
+Found [here](https://github.com/gbdev/hardware.inc)
+
 ### Font
 
 Found [here](https://dragon.style/@dodec/100218699356979811)

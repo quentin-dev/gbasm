@@ -39,7 +39,7 @@ Start:
 
     call STOPLCD
 
-    ld hl, $9000
+    ld hl, $8800
     ld de, FontTiles
     ld bc, FontTilesEnd - FontTiles
 .copyFont
@@ -154,8 +154,6 @@ Start:
     jr .game_loop
 
 .decrease
-
-    ; FIXME: Update rSCX / rSCY evenly during cooldown instead of all at once
 
     call UPDATECOOLDOWN
 

@@ -204,9 +204,33 @@ UPDATEPLAYERYPOSITION: MACRO
 ENDM
 
 
+WAITVRAMMACRO: MACRO
+
+    ld a, [rSTAT]
+    and STATF_BUSY
+    jr nz, @-4
+
+ENDM
+
+WAITVBLANKMACRO: MACRO
+
+    ld a, [rLY]
+    cp 144
+    jr nz, @-4
+    
+ENDM
+
 CHECKMOVECOOLDOWN: MACRO
 
     ld hl, MOVE_COOLDOWN
+    ld a, [hl]
+    and a
+
+ENDM
+
+CHECKACTIONCOOLDOWN: MACRO
+
+    ld hl, ACTION_COOLDOWN
     ld a, [hl]
     and a
 

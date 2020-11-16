@@ -35,6 +35,15 @@ INITGAME::
     ld hl, rOBP1
     ld [hl], %11100100
 
+    ld hl, rWY
+    ld [hl], WINDOW_Y_HIDDEN
+
+    ld hl, rWX
+    ld [hl], WINDOW_X
+
+    ld hl, $9C00
+    ld [hl], $C1
+
     call RESETALLOAMATTR
 
     SETPLAYERSPRITETILE 0
@@ -46,6 +55,9 @@ INITGAME::
     ld hl, MOVE_COOLDOWN
     ld [hl], 0
 
+    ld hl, ACTION_COOLDOWN
+    ld [hl], 0
+
     ret
 
 SETMOVECOOLDOWN::
@@ -55,9 +67,23 @@ SETMOVECOOLDOWN::
 
     ret
 
-UPDATECOOLDOWN::
+UPDATEMOVECOOLDOWN::
 
     ld hl, MOVE_COOLDOWN
+    dec [hl]
+
+    ret
+
+SETACTIONCOOLDOWN::
+
+    ld hl, ACTION_COOLDOWN
+    ld [hl], ACTION_COOLDOWN_LENGTH
+
+    ret
+
+UPDATEACTIONCOOLDOWN::
+
+    ld hl, ACTION_COOLDOWN
     dec [hl]
 
     ret

@@ -14,6 +14,8 @@ MOVERIGHT::
 
     jr nz, .end
 
+    call HIDELCDWINDOW
+
     ld a, [rSCX]
     add MOVE_SIZE
     ld [rSCX], a
@@ -36,6 +38,8 @@ MOVELEFT::
     CHECKTILEISGROUND
 
     jr nz, .end
+
+    call HIDELCDWINDOW
 
     ld a, [rSCX]
     sub MOVE_SIZE
@@ -60,6 +64,8 @@ MOVEUP::
 
     jr nz, .end
 
+    call HIDELCDWINDOW
+
     ld a, [rSCY]
     sub MOVE_SIZE
     ld [rSCY], a
@@ -82,6 +88,8 @@ MOVEDOWN::
     CHECKTILEISGROUND
 
     jr nz, .end
+
+    call HIDELCDWINDOW
 
     ld a, [rSCY]
     add MOVE_SIZE

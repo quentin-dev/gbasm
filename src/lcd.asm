@@ -1,4 +1,5 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 
 SECTION "LCD utils", ROMX
 
@@ -19,9 +20,13 @@ WAITVRAM::
 ; @overwrites: A
 ; @returns: Nothing
 WAITVBLANK::
+
+.loop
+
     ld a, [rLY]
     cp 145
-    jr nz, WAITVBLANK
+    jr nz, .loop
+    
     ret
 
 ; Enables the LCD display by setting the 7th bit of the LCD control register
@@ -54,8 +59,39 @@ STARTLCD::
 ; @return: Nothing
 STARTLCDWITHSPRITES::
     
-    ld a, LCDCF_ON | LCDCF_BG9800 | LCDCF_WINOFF | LCDCF_BG8800 | LCDCF_BGON | LCDCF_OBJON | LCDCF_OBJ8
+    ld a, LCDCF_ON | LCDCF_BG9800 | LCDCF_WINON | LCDCF_BG8800 | LCDCF_BGON | LCDCF_OBJON | LCDCF_OBJ8 | LCDCF_WIN9C00
     ld [rLCDC], a
+    ret
+
+UPDATELCDWINDOW::
+
+    ld hl, rWY
+    ld a, [hl]
+
+    cp WINDOW_Y_SHOWN
+
+    ; Not equal to WINDOW_Y_SHOWN
+    jr nz, .window_is_off
+
+.window_is_on
+
+    ld [hl], WINDOW_Y_HIDDEN
+
+    jr .end
+
+.window_is_off
+
+    ld [hl], WINDOW_Y_SHOWN
+
+.end
+
+    ret
+
+HIDELCDWINDOW::
+
+    ld hl, rWY
+    ld [hl], WINDOW_Y_HIDDEN
+
     ret
 
 ; Stops the LCD, but waits for VBlank before doing so

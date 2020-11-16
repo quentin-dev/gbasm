@@ -107,6 +107,10 @@ Start:
 
     call WAITVBLANK
 
+    CHECKACTIONCOOLDOWN
+
+    jr nz, .update_action_cooldown
+
     CHECKMOVECOOLDOWN
 
     jr nz, .decrease
@@ -138,6 +142,12 @@ Start:
     ; Check if the B button was pressed
     bit PADB_B, a
     jr nz, .right_pressed
+
+    ; call WAITVBLANK
+
+    call UPDATELCDWINDOW
+
+    call SETACTIONCOOLDOWN
 
     ; FIXME: Assign action to in-game B button press
 
@@ -183,7 +193,13 @@ Start:
 
 .decrease
 
-    call UPDATECOOLDOWN
+    call UPDATEMOVECOOLDOWN
+
+    jr .game_loop
+
+.update_action_cooldown
+
+    call UPDATEACTIONCOOLDOWN
 
     jr .game_loop
 

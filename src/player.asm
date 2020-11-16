@@ -50,6 +50,8 @@ MOVEUP::
 
     call SETMOVECOOLDOWN
 
+    DECREASEPLAYERYPOSITION 1
+
     ret
 
 ; What to do when the player should move down
@@ -63,5 +65,7 @@ MOVEDOWN::
     ld [rSCY], a
 
     call SETMOVECOOLDOWN
+
+    INCREASEPLAYERYPOSITION 1
 
     ret

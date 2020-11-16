@@ -110,6 +110,10 @@ INCREASEPLAYERXPOSITION: MACRO
 
 ENDM
 
+; Decrease the player's X axis position
+; @param \1: the amount to substract
+; @overwrites: HL, A, B
+; @returns: nothing
 DECREASEPLAYERXPOSITION: MACRO
 
     ld hl, PLAYER_X
@@ -119,6 +123,35 @@ DECREASEPLAYERXPOSITION: MACRO
     ld [hl], a
 
 ENDM
+
+; Increase the player's Y axis position
+; @param \1: the value to add
+; @overwrites: HL, A
+; @returns: nothing
+INCREASEPLAYERYPOSITION: MACRO
+
+    ld hl, PLAYER_Y
+    ld a, \1
+    add [hl]
+    ld [hl], a
+
+ENDM
+
+; Decrease the player's Y axis position
+; @param \1: the amount to substract
+; @overwrites: HL, A, B
+; @returns: nothing
+DECREASEPLAYERYPOSITION: MACRO
+
+    ld hl, PLAYER_Y
+    ld a, [hl]
+    ld b, \1
+    sub a, b
+    ld [hl], a
+
+ENDM
+
+
 
 ; Update the player's Y position in RAM
 ; @param \1: The new Y position

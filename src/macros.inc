@@ -18,11 +18,11 @@ SETSPRITESCREENPOSITION: MACRO
     ld hl, _OAMRAM + (\1 * 4)
 
     ; Set Y position + offset
-    ld [hl], \2 + 16
+    ld [hl], \3 + 16
     
     inc l
     ; Set X position + offset
-    ld [hl], \3 + 8
+    ld [hl], \2 + 8
 
 ENDM
 
@@ -87,8 +87,8 @@ GETBGTILEINDEXAT: MACRO
     add hl, hl
 
     ; Put HL into BC
-    push hl
-    pop bc
+    ld b, h
+    ld c, l
 
     ; Save (X + offset) to HL
     ld hl, \1

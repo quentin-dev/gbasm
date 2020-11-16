@@ -48,42 +48,81 @@ SETPLAYERSPRITETILE: MACRO
 
 ENDM
 
-; WIP
-; @param \1: the X postion
-; @param \2: the Y position
-; @returns HL: the address of the corresponding tile
+; Saves the BG tile index to A
+; @param \1: the tile's X postion
+; @param \2: the tile's Y position
+; @param \3: the X offset
+; @param \4: the Y offset
+; @overwrites: HL, DE
+; @returns A: the corresponding tile index
 GETBGTILEINDEXAT: MACRO
 
-    ; Calculate (Y * 32) + [rSCY] + X + ([rSCX] / 32) + _SCRN0
+    ; GOAL: Calculate ((Y * 32) + X) + _SCRN0
+    
+    ; Save BC as to not lose its data
     push bc
 
-    ld hl, 0
+    ; Save ((Y + offset) * 32) to BC    
+    ld hl, \2
+    ld a, [hl]
 
-    ; Add (Y * 32) + X + _SCRN0    
-    ld bc, ((\2 / 8) * 32) + (\1 / 8) + _SCRN0
+    add a, \4
+
+    ld h, 0
+    ld l, a
+
+    ; Y * 2
+    add hl, hl
+
+    ; Y * 4
+    add hl, hl
+
+    ; Y * 8
+    add hl, hl
+
+    ; Y * 16
+    add hl, hl
+    
+    ; Y * 32
+    add hl, hl
+
+    ; Put HL into BC
+    push hl
+    pop bc
+
+    ; Save (X + offset) to HL
+    ld hl, \1
+    ld a, [hl]
+
+    add a, \3
+    
+    ld h, 0
+    ld l, a
+
+    ; Add _SCRN0 + BC to HL
+    ld de, _SCRN0
+
+    add hl, de
     add hl, bc
 
-    ; Add [rSCY]
-    ld bc, 0
-    ld a, [rSCY]
-    ld c, a
-    add hl, bc
+    ; Load BG tile index into A
+    ld a, [hl]
 
-    ; Add [rSCX] / 32
-    ld bc, 0
-    ld a, [rSCX]
-
-    rra
-    rra
-    rra
-    rra
-    rra
-
-    ld c, a
-    add hl, bc
-
+    ; Fetch BC's initial value
     pop bc
     
+ENDM
+
+; Checks if the value in A is equal to GROUND_TILE_INDEX
+;
+; Should be used right after GETBGTILEINDEXAT
+; @overwrites: H
+; @returns: Nothing
+CHECKTILEISGROUND: MACRO
+
+    ld h, GROUND_TILE_INDEX
+    xor a, h
+
 ENDM
 
 ; Update the player's X position in RAM

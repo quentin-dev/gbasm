@@ -51,7 +51,7 @@ Start:
     or c
     jr nz, .copyFont
 
-    ld hl, $9800 ; Prints at top-left corner of the screen
+    ld hl, _SCRN1 ; Prints on window screen
     ld de, HelloWorldStr
 .copyString
     ld a, [de]

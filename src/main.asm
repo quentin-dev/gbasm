@@ -51,16 +51,20 @@ Start:
     or c
     jr nz, .copyFont
 
-    ld hl, _SCRN1 ; Prints on window screen
-    ld de, HelloWorldStr
-.copyString
-    ld a, [de]
-    ld [hli], a
-    inc de
-    and a ; Check if we copied a 0
-    jr nz, .copyString ; Continue if it is not
+    call CLEARWINDOW
 
-.copy
+    ; ld hl, _SCRN1 ; Prints on window screen
+    ld de, HelloWorldStrStart
+    call SETDIALOGUESTRING
+
+    ld de, IAmNpcStrStart
+    call SETDIALOGUESTRING
+; .copyString
+;     ld a, [de]
+;     ld [hli], a
+;     inc de
+;     and a ; Check if we copied a 0
+;     jr nz, .copyString ; Continue if it is not
 
     ; Init display register
     ld a, %11100100
@@ -123,7 +127,7 @@ Start:
 
     ; Check if the Start button was pressed
     bit PADB_START, a
-    jr nz, .b_pressed
+    jr nz, .a_pressed
 
     ; FIXME: Assign action to in-game Start button press
 
@@ -135,12 +139,12 @@ Start:
 
     jr .end
 
-.b_pressed
+.a_pressed
 
     ld a, b
 
-    ; Check if the B button was pressed
-    bit PADB_B, a
+    ; Check if the A button was pressed
+    bit PADB_A, a
     jr nz, .right_pressed
 
     ; call WAITVBLANK
@@ -208,9 +212,3 @@ SECTION "Font", ROM0
 FontTiles:
 INCBIN "data/font.chr"
 FontTilesEnd:
-
-SECTION "Hello World string", ROM0
-
-HelloWorldStr:
-    db "Hello, World!", 0
-HelloWorldStrEnd:

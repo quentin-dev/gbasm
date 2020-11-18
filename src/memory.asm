@@ -60,3 +60,28 @@ MEMCOPYTOVRAM::
     jr nz, .memcopyvramloop
 
     ret
+
+; Sets bytes to a certain value
+; @param A: The value to set
+; @param DE: Destination's starting position
+; @param BC: Number of bytes to set
+; @returns: Nothing 
+MEMSETVAL::
+
+    inc b
+    inc c
+    jr .memsetvalskip
+
+.memsetvalloop
+
+    ld [de], a
+    inc de
+
+.memsetvalskip
+
+    dec c
+    jr nz, .memsetvalloop
+    dec b
+    jr nz, .memsetvalloop
+
+    ret

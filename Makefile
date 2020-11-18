@@ -11,7 +11,8 @@ IMGDIR = assets/images
 
 OBJ = src/main.o src/lcd.o src/joypad.o
 OBJ += src/memory.o src/menu.o src/game.o
-OBJ += src/sprites.o src/player.o
+OBJ += src/sprites.o src/player.o src/strings.o
+OBJ += src/dialogue.o
 
 ROM = gbasm.gb
 SYM = gbasm.sym

@@ -41,9 +41,6 @@ INITGAME::
     ld hl, rWX
     ld [hl], WINDOW_X
 
-    ; ld hl, $9C00
-    ; ld [hl], $C1
-
     call RESETALLOAMATTR
 
     SETPLAYERSPRITETILE 0

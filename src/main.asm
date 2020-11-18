@@ -54,17 +54,11 @@ Start:
     call CLEARWINDOW
 
     ; ld hl, _SCRN1 ; Prints on window screen
-    ld de, HelloWorldStrStart
-    call SETDIALOGUESTRING
+    ; ld de, HelloWorldStrStart
+    ; call SETDIALOGUESTRING
 
-    ld de, IAmNpcStrStart
-    call SETDIALOGUESTRING
-; .copyString
-;     ld a, [de]
-;     ld [hli], a
-;     inc de
-;     and a ; Check if we copied a 0
-;     jr nz, .copyString ; Continue if it is not
+    ; ld de, IAmNpcStrStart
+    ; call SETDIALOGUESTRING
 
     ; Init display register
     ld a, %11100100
@@ -146,12 +140,13 @@ Start:
     ; Check if the A button was pressed
     bit PADB_A, a
     jr nz, .right_pressed
+    
+    call APRESSED
 
     ; call WAITVBLANK
 
-    call UPDATELCDWINDOW
 
-    call SETACTIONCOOLDOWN
+    ; call SETACTIONCOOLDOWN
 
     ; FIXME: Assign action to in-game B button press
 
